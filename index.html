@@ -12,13 +12,13 @@
 			crossorigin="anonymous"
 		/>
 		<!-- CSS -->
-		<link rel="stylesheet" href="styles/reset.css" />
+		<link rel="stylesheet" href="./css/styles.css" />
 		<title>Weather Dashboard</title>
 	</head>
 
 	<body>
 		<header
-			class="container-fluid text-center text-white bg-dark p-2 weather-header"
+			class="container-fluid text-center p-2 weather-header"
 		>
 			<h1>Weather Dashboard</h1>
 		</header>
@@ -34,17 +34,17 @@
 						<div class="form-inline form-group">
 							<div class="input-group">
 								<input
-									class="form-input weather-search"
+									class="form-control weather-search col-12 mb-3"
 									type="text"
 									id="search-input"
 									placeholder="London"
 									aria-labelledby="form-heading"
 									aria-controls="today forecast"
 								/>
-								<div class="input-group-append">
+								<div class="input-group-append col-12">
 									<button
 										type="submit"
-										class="btn search-button col-sm-12"
+										class="btn btn-primary search-button col-12"
 										id="search-button"
 										aria-label="submit search"
 									>
@@ -79,6 +79,6 @@
 		<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 		<!-- jQuery -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="script.js"></script>
+		<script src="./js/script.js"></script>
 	</body>
 </html>
