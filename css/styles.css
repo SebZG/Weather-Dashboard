@@ -22,8 +22,8 @@
 /*! GENERAL */
 
 ::selection {
-	background-color: var(--BLUE);
-	color: var(--WHITE);
+	background-color: var(--YELLOW);
+	color: var(--BLACK);
 }
 
 body {
@@ -37,34 +37,55 @@ body {
 }
 
 #today-time {
-  font-size: var(--F-M);
+	font-size: var(--F-M);
 }
 
-/*! TODAY CARD */
+/*! WEATHER CARD */
 
 #today-card {
 	background-color: var(--BLACK);
 	color: var(--WHITE);
 	border: 1px solid rgba(245, 245, 245, 0.2);
 	border-radius: 1rem;
-  width: 100%;
-  box-shadow: 2px 2px 6px 0 #000;
+	width: 100%;
+	box-shadow: 2px 2px 6px 0 #000;
+}
+
+#fiveDay-card {
+	background-color: var(--BLUE);
+	color: var(--WHITE);
+	border: 1px solid rgba(245, 245, 245, 0.2);
+	border-radius: 1rem;
+	/* width: 100%; */
+	box-shadow: 2px 2px 6px 0 #000;
+	/* margin: 0.75rem; */
 }
 
 .today-title {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
-.today-icon {
-  width: 50px;
-  height: auto;
+.fiveDay-title {
+	font-size: var(--F-M);
 }
 
-.today-desc {
-  font-weight: 400;
+.today-icon,
+.fiveDay-icon {
+	width: 50px;
+	height: auto;
 }
 
-.today-info {
-font-weight: 300;
+.today-desc,
+.fiveDay-desc {
+	font-weight: 400;
+}
+
+.fiveDay-desc {
+	font-size: var(--F-NORMAL);
+}
+
+.today-info,
+.fiveDay-info {
+	font-weight: 300;
 }
