@@ -1,5 +1,4 @@
-const todayTime = dayjs().format('hh:mm a');
-const todayDate = dayjs().format('(DD/MM/YYYY)');
+let todayDate;
 
 // HTML ELements
 const todayTimeEl = $('#today-time');
@@ -9,7 +8,22 @@ const formEl = $('#search-form');
 const inputEl = $('#search-input');
 const historyEl = $('#history');
 
-todayTimeEl.text(todayTime);
+// Update the current time
+const updateCurrentTime = () => {
+	const todayTime = dayjs().format('hh:mm:ss A');
+	todayTimeEl.text(todayTime);
+};
+
+// Update today's date
+const updateTodayDate = () => {
+	todayDate = dayjs().format('(DD/MM/YYYY)');
+};
+
+updateCurrentTime();
+updateTodayDate();
+
+setInterval(updateCurrentTime, 1000);
+setInterval(updateTodayDate, 86400000);
 
 const API_KEY = '0e780f9d810b18eee750098926ce4384';
 
@@ -27,7 +41,7 @@ const searchCity = (e) => {
 			return response.json();
 		})
 		.then((data) => {
-			// console.log(data)
+			console.log(data)
 
 			// Grab lat and lon for five day forecast
 			const lat = data.coord.lat;
