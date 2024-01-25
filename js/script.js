@@ -1,4 +1,4 @@
-const todayTime = dayjs().format('hh:mm a, DD/MM/YYYY');
+const todayTime = dayjs().format('hh:mm a');
 const todayDate = dayjs().format('(DD/MM/YYYY)');
 
 // HTML ELements
@@ -9,7 +9,7 @@ const formEl = $('#search-form');
 const inputEl = $('#search-input');
 const historyEl = $('#history');
 
-todayTimeEl.append(todayTime);
+todayTimeEl.text(todayTime);
 
 const API_KEY = '0e780f9d810b18eee750098926ce4384';
 
@@ -45,7 +45,7 @@ const searchCity = (e) => {
 
 			// Display todays forecast
 			todayEl.append(`
-        <div id="today-card" class="card">
+        <div id="today-card" class="card mx-lg-3">
           <div class="card-body">
             <h3 class="today-title card-title">${name} ${todayDate}
             <img class="today-icon" src=${iconUrl} alt=${desc} />
@@ -72,13 +72,14 @@ const searchCity = (e) => {
 		.then((forecastData) => {
 			// console.log(forecastData);
 
-			// Grab five day weather array
+			// Grab five day forecast array
 			const list = forecastData.list;
 			console.log(list);
 
 			// Display five day forecast
-			for (let i = 0; i < list.length; i += 8) {
-				const date = list[i].dt_txt.split(' ')[0].replace(/\-/g, '/');
+			for (let i = 8; i < list.length; i += 8) {
+				const date = list[i].dt_txt.split(' ')[0].replace(/\-/g, ' ');
+				const revDate = reverseDate(date);
 				const icon = list[i].weather[0].icon;
 				const desc = list[i].weather[0].description;
 				const temp = list[i].main.temp;
@@ -87,9 +88,9 @@ const searchCity = (e) => {
 				const humidity = list[i].main.humidity;
 				let iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
 				fiveDayEl.append(`
-        <div id="fiveDay-card" class="card mb-sm-2">
+        <div id="fiveDay-card" class="card mb-2 mb-sm-2 mx-lg-3">
           <div class="card-body">
-            <h3 class="fiveDay-title card-title">${date}</h3>
+            <h3 class="fiveDay-title card-title">${revDate}</h3>
             <img class="fiveDay-icon" src=${iconUrl} alt=${desc} />
             <h5 class="fiveDay-desc card-subtitle mb-2">${desc}</h5>
             <p class="fiveDay-info card-text">Temp: ${Math.floor(
@@ -102,6 +103,10 @@ const searchCity = (e) => {
         `);
 			}
 		});
+};
+
+const reverseDate = (date) => {
+	return date.split(' ').reverse().join('/');
 };
 
 formEl.on('submit', (e) => searchCity(e));
