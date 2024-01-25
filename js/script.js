@@ -8,8 +8,9 @@ const historyEl = $('#history');
 
 // Update the current time
 const updateCurrentTime = () => {
-	const todayTime = dayjs().format('hh:mm:ss A');
-	todayTimeEl.text(todayTime);
+	const localTime = new Date();
+	const currentTime = dayjs(localTime).format('hh:mm:ss A');
+	todayTimeEl.text(currentTime);
 };
 
 updateCurrentTime();
