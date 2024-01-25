@@ -44,6 +44,20 @@ header h1 {
 	font-size: var(--F-L);
 }
 
+#search-input {
+	border-top-right-radius: var(--bs-border-radius);
+	border-bottom-right-radius: var(--bs-border-radius);
+}
+
+#search-button {
+	--bs-btn-bg: var(--YELLOW);
+	--bs-btn-border-color: var(--YELLOW);
+	--bs-btn-hover-bg: var(--YELLOW);
+	--bs-btn-hover-border-color: var(--BLUE);
+	--bs-btn-active-bg: var(--BLUE);
+	--bs-btn-active-border-color: var(--YELLOW);
+}
+
 /*! WEATHER CARD */
 
 #today-card {
@@ -92,15 +106,3 @@ header h1 {
 .fiveDay-info {
 	font-weight: 300;
 }
-
-/* @media only screen and (max-width: 768px) {
-	#fiveDay-card {
-		width: 175px;
-	}
-} */
-
-/* @media only screen and (min-width: 0px) {
-	#fiveDay-card {
-		width: 100%;
-	}
-} */

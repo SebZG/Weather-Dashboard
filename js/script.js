@@ -7,7 +7,6 @@ $(document).ready(() => {
 	const inputEl = $('#search-input');
 	const historyEl = $('#history');
 
-	// Update the current time
 	const updateCurrentTime = () => {
 		const localTime = new Date();
 		const currentTime = dayjs(localTime).format('hh:mm:ss A');
@@ -25,20 +24,14 @@ $(document).ready(() => {
 			e.preventDefault();
 		}
 
-		// Retrieve existing history from local storage
 		let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
 
-		// Add new search term to history
 		if (searchTerm) {
-			history.unshift(searchTerm);
-			history = [...new Set(history)];
-			history = history.slice(0, 7);
+			history = Array.from(new Set([searchTerm, ...history])).slice(0, 7);
 		}
 
-		// Save updated history to local storage
 		localStorage.setItem('searchHistory', JSON.stringify(history));
 
-		// Update the history UI
 		renderHistory();
 
 		todayEl.empty();
@@ -54,43 +47,37 @@ $(document).ready(() => {
 				return response.json();
 			})
 			.then((data) => {
-				// Grab local time from API
-				const localTime = data.dt;
-				const localDate = new Date(localTime * 1000);
-
-				// Format local date
+				// Grab local date from API
+				const localDate = new Date(data.dt * 1000);
 				const localDateString = dayjs(localDate).format('(DD/MM/YYYY)');
 
-				// Grab lat and lon for five day forecast
-				const lat = data.coord.lat;
-				const lon = data.coord.lon;
+				const { name, weather, main, wind } = data;
 
-				// Grab today's weather info
-				const name = data.name;
-				const desc = data.weather[0].description;
-				const icon = data.weather[0].icon;
-				const temp = data.main.temp;
-				const celcius = temp - 273.15;
-				const windSpeed = data.wind.speed;
-				const humidity = data.main.humidity;
-				let iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+				let iconUrl = `https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
 
 				// Display todays forecast
 				todayEl.append(`
         <div id="today-card" class="card mx-lg-3">
           <div class="card-body">
             <h3 class="today-title card-title">${name} ${localDateString}
-            <img class="today-icon" src=${iconUrl} alt=${desc} />
+            <img class="today-icon" src=${iconUrl} alt=${
+					weather[0].description
+				} />
             </h3>
-            <h5 class="today-desc card-subtitle mb-2">${desc}</h5>
+            <h5 class="today-desc card-subtitle mb-2">${
+							weather[0].description
+						}</h5>
             <p class="today-info card-text">Temp: ${Math.floor(
-							celcius,
+							main.temp - 273.15,
 						)} &#8451</p>
-            <p class="today-info card-text">Wind: ${windSpeed} KPH</p>
-            <p class="today-info card-text">Humidity: ${humidity}%</p>
+            <p class="today-info card-text">Wind: ${wind.speed} KPH</p>
+            <p class="today-info card-text">Humidity: ${main.humidity}%</p>
           </div>
         </div>
       `);
+
+				const lat = data.coord.lat;
+				const lon = data.coord.lon;
 
 				let forecast = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
 
