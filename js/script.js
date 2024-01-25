@@ -19,12 +19,18 @@ setInterval(updateCurrentTime, 1000);
 
 const API_KEY = '0e780f9d810b18eee750098926ce4384';
 
-const searchCity = (e) => {
+// Handle initial load
+const loadDefaultCity = () => {
+	searchCity({ preventDefault: () => {} }, 'London');
+};
+
+const searchCity = (e, searchTerm) => {
 	e.preventDefault();
 	todayEl.empty();
 	fiveDayEl.empty();
 
-	let searchTerm = inputEl.val();
+	searchTerm = searchTerm || inputEl.val() || 'London';
+
 	let today = `https://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&appid=${API_KEY}`;
 
 	// Fetch today's forecast
@@ -71,7 +77,6 @@ const searchCity = (e) => {
         </div>
       `);
 
-			// Use lat and lon for the forecast API
 			let forecast = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
 
 			// Fetch five day forecast
@@ -107,7 +112,7 @@ const searchCity = (e) => {
             <p class="fiveDay-info card-text">Wind: ${windSpeed} KPH</p>
             <p class="fiveDay-info card-text">Humidity: ${humidity}%</p>
           </div>
-        </div>
+					</div>
         `);
 			}
 		});
@@ -116,3 +121,5 @@ const searchCity = (e) => {
 const reverseDate = (date) => date.split(' ').reverse().join('/');
 
 formEl.on('submit', (e) => searchCity(e));
+
+loadDefaultCity();
