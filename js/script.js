@@ -121,7 +121,15 @@ $(document).ready(() => {
 	};
 
 	const loadDefaultCity = () => {
-		searchCity(null, 'London');
+		const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+		const lastSearchTerm = history[0];
+
+		if (lastSearchTerm) {
+			searchCity(null, lastSearchTerm);
+		} else {
+			searchCity(null, 'London');
+		}
 	};
 
 	const renderHistory = () => {
