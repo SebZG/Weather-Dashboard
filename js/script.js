@@ -1,5 +1,3 @@
-let todayDate;
-
 // HTML ELements
 const todayTimeEl = $('#today-time');
 const todayEl = $('#today');
@@ -14,16 +12,9 @@ const updateCurrentTime = () => {
 	todayTimeEl.text(todayTime);
 };
 
-// Update today's date
-const updateTodayDate = () => {
-	todayDate = dayjs().format('(DD/MM/YYYY)');
-};
-
 updateCurrentTime();
-updateTodayDate();
 
 setInterval(updateCurrentTime, 1000);
-setInterval(updateTodayDate, 86400000);
 
 const API_KEY = '0e780f9d810b18eee750098926ce4384';
 
@@ -41,7 +32,12 @@ const searchCity = (e) => {
 			return response.json();
 		})
 		.then((data) => {
-			console.log(data)
+			// Grab local time from API
+			const localTime = data.dt; // Time in UNIX timestamp
+			const localDate = new Date(localTime * 1000); // Convert to milliseconds
+
+			// Format local date
+			const localDateString = dayjs(localDate).format('(DD/MM/YYYY)');
 
 			// Grab lat and lon for five day forecast
 			const lat = data.coord.lat;
@@ -61,7 +57,7 @@ const searchCity = (e) => {
 			todayEl.append(`
         <div id="today-card" class="card mx-lg-3">
           <div class="card-body">
-            <h3 class="today-title card-title">${name} ${todayDate}
+            <h3 class="today-title card-title">${name} ${localDateString}
             <img class="today-icon" src=${iconUrl} alt=${desc} />
             </h3>
             <h5 class="today-desc card-subtitle mb-2">${desc}</h5>
@@ -84,11 +80,8 @@ const searchCity = (e) => {
 			return response.json();
 		})
 		.then((forecastData) => {
-			// console.log(forecastData);
-
 			// Grab five day forecast array
 			const list = forecastData.list;
-			console.log(list);
 
 			// Display five day forecast
 			for (let i = 8; i < list.length; i += 8) {
@@ -119,8 +112,6 @@ const searchCity = (e) => {
 		});
 };
 
-const reverseDate = (date) => {
-	return date.split(' ').reverse().join('/');
-};
+const reverseDate = (date) => date.split(' ').reverse().join('/');
 
 formEl.on('submit', (e) => searchCity(e));
