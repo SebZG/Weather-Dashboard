@@ -91,7 +91,7 @@ $(document).ready(() => {
 				const list = forecastData.list;
 
 				// Display five day forecast
-				for (let i = 8; i < list.length; i += 8) {
+				for (let i = 7; i < list.length; i += 8) {
 					const { dt_txt, weather, main, wind } = list[i];
 					const date = dt_txt.split(' ')[0].replace(/\-/g, ' ');
 					const revDate = reverseDate(date);
