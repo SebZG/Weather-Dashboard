@@ -47,7 +47,6 @@ $(document).ready(() => {
 				return response.json();
 			})
 			.then((data) => {
-				// Grab local date from API
 				const localDate = new Date(data.dt * 1000);
 				const localDateString = dayjs(localDate).format('(DD/MM/YYYY)');
 
@@ -93,26 +92,28 @@ $(document).ready(() => {
 
 				// Display five day forecast
 				for (let i = 8; i < list.length; i += 8) {
-					const date = list[i].dt_txt.split(' ')[0].replace(/\-/g, ' ');
+					const { dt_txt, weather, main, wind } = list[i];
+					const date = dt_txt.split(' ')[0].replace(/\-/g, ' ');
 					const revDate = reverseDate(date);
-					const icon = list[i].weather[0].icon;
-					const desc = list[i].weather[0].description;
-					const temp = list[i].main.temp;
+					const temp = main.temp;
 					const celcius = temp - 273.15;
-					const windSpeed = list[i].wind.speed;
-					const humidity = list[i].main.humidity;
-					let iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+					let iconUrl = `https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
+
 					fiveDayEl.append(`
         <div id="fiveDay-card" class="card mb-2 mb-sm-2 mx-lg-3 text-center">
           <div class="card-body">
             <h3 class="fiveDay-title card-title">${revDate}</h3>
-            <img class="fiveDay-icon" src=${iconUrl} alt=${desc} />
-            <h5 class="fiveDay-desc card-subtitle mb-2">${desc}</h5>
+            <img class="fiveDay-icon" src=${iconUrl} alt=${
+						weather[0].description
+					} />
+            <h5 class="fiveDay-desc card-subtitle mb-2">${
+							weather[0].description
+						}</h5>
             <p class="fiveDay-info card-text">Temp: ${Math.floor(
 							celcius,
 						)} &#8451</p>
-            <p class="fiveDay-info card-text">Wind: ${windSpeed} KPH</p>
-            <p class="fiveDay-info card-text">Humidity: ${humidity}%</p>
+            <p class="fiveDay-info card-text">Wind: ${wind.speed} KPH</p>
+            <p class="fiveDay-info card-text">Humidity: ${main.humidity}%</p>
           </div>
 					</div>
         `);
