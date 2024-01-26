@@ -103,7 +103,7 @@ $(document).ready(() => {
 					const humidity = list[i].main.humidity;
 					let iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
 					fiveDayEl.append(`
-        <div id="fiveDay-card" class="card mb-2 mb-sm-2 mx-lg-3">
+        <div id="fiveDay-card" class="card mb-2 mb-sm-2 mx-lg-3 text-center">
           <div class="card-body">
             <h3 class="fiveDay-title card-title">${revDate}</h3>
             <img class="fiveDay-icon" src=${iconUrl} alt=${desc} />
@@ -140,7 +140,7 @@ $(document).ready(() => {
 		history.forEach((term) => {
 			const button = $('<button>')
 				.text(term)
-				.addClass('btn btn-secondary mr-2 mb-3');
+				.addClass('btn btn-secondary mr-2 mb-3 flex-grow-1');
 			button.on('click', () => searchCity(null, term));
 			historyEl.append(button);
 		});

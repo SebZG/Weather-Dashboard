@@ -56,6 +56,8 @@ header h1 {
 	--bs-btn-hover-border-color: var(--BLUE);
 	--bs-btn-active-bg: var(--BLUE);
 	--bs-btn-active-border-color: var(--YELLOW);
+
+	width: 100%;
 }
 
 /*! WEATHER CARD */
