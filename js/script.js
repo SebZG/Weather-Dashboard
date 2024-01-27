@@ -19,10 +19,7 @@ $(document).ready(() => {
 
 	const API_KEY = '0e780f9d810b18eee750098926ce4384';
 
-	const searchCity = (e, searchTerm) => {
-		if (e) {
-			e.preventDefault();
-		}
+	const searchCity = (searchTerm) => {
 
 		let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
 
@@ -127,9 +124,9 @@ $(document).ready(() => {
 		const lastSearchTerm = history[0];
 
 		if (lastSearchTerm) {
-			searchCity(null, lastSearchTerm);
+			searchCity(lastSearchTerm);
 		} else {
-			searchCity(null, 'London');
+			searchCity('London');
 		}
 	};
 
@@ -142,7 +139,7 @@ $(document).ready(() => {
 			const button = $('<button>')
 				.text(term)
 				.addClass('btn btn-secondary mr-2 mb-3 flex-grow-1');
-			button.on('click', () => searchCity(null, term));
+			button.on('click', () => searchCity(term));
 			historyEl.append(button);
 		});
 	};
@@ -152,7 +149,7 @@ $(document).ready(() => {
 	formEl.on('submit', (e) => {
 		e.preventDefault();
 
-		searchCity(null, inputEl.val());
+		searchCity(inputEl.val());
 	});
 
 	loadDefaultCity();
