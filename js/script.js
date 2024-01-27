@@ -1,4 +1,3 @@
-$(document).ready(() => {
 	// HTML ELements
 	const todayTimeEl = $('#today-time');
 	const todayEl = $('#today');
@@ -36,7 +35,7 @@ $(document).ready(() => {
 
 		searchTerm = searchTerm || inputEl.val() || 'London';
 
-		let today = `https://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&appid=${API_KEY}`;
+		const today = `https://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&appid=${API_KEY}`;
 
 		// Fetch today's forecast
 		fetch(today)
@@ -49,7 +48,7 @@ $(document).ready(() => {
 
 				const { name, weather, main, wind } = data;
 
-				let iconUrl = `https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
+				const iconUrl = `https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
 
 				// Display todays forecast
 				todayEl.append(`
@@ -75,7 +74,7 @@ $(document).ready(() => {
 				const lat = data.coord.lat;
 				const lon = data.coord.lon;
 
-				let forecast = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+				const forecast = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
 
 				// Fetch five day forecast
 				return fetch(forecast);
@@ -94,7 +93,7 @@ $(document).ready(() => {
 					const revDate = reverseDate(date);
 					const temp = main.temp;
 					const celcius = temp - 273.15;
-					let iconUrl = `https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
+					const iconUrl = `https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
 
 					fiveDayEl.append(`
         <div id="fiveDay-card" class="card mb-2 mb-sm-2 mx-lg-3 text-center">
@@ -154,4 +153,3 @@ $(document).ready(() => {
 
 	loadDefaultCity();
 	renderHistory();
-});
