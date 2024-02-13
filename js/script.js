@@ -9,6 +9,7 @@ const historyEl = $('#history');
 const updateCurrentTime = () => {
 	const localTime = new Date();
 	const currentTime = dayjs(localTime).format('hh:mm:ss A');
+
 	todayTimeEl.text(currentTime);
 };
 
@@ -19,7 +20,6 @@ setInterval(updateCurrentTime, 1000);
 const API_KEY = '0e780f9d810b18eee750098926ce4384';
 
 const searchCity = (searchTerm) => {
-
 	let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
 
 	if (searchTerm) {
@@ -55,14 +55,10 @@ const searchCity = (searchTerm) => {
         <div id="today-card" class="card mx-lg-3">
           <div class="card-body">
             <h3 class="today-title card-title">${name} ${localDateString}
-            <img class="today-icon" src=${iconUrl} alt=${weather[0].description
-				} />
+            <img class="today-icon" src=${iconUrl} alt=${weather[0].description} />
             </h3>
-            <h5 class="today-desc card-subtitle mb-2">${weather[0].description
-				}</h5>
-            <p class="today-info card-text">Temp: ${Math.floor(
-					main.temp - 273.15,
-				)} &#8451</p>
+            <h5 class="today-desc card-subtitle mb-2">${weather[0].description}</h5>
+            <p class="today-info card-text">Temp: ${Math.floor(main.temp - 273.15)} &#8451</p>
             <p class="today-info card-text">Wind: ${wind.speed} KPH</p>
             <p class="today-info card-text">Humidity: ${main.humidity}%</p>
           </div>
@@ -97,17 +93,13 @@ const searchCity = (searchTerm) => {
         <div id="fiveDay-card" class="card mb-2 mb-sm-2 mx-lg-3 text-center">
           <div class="card-body">
             <h3 class="fiveDay-title card-title">${revDate}</h3>
-            <img class="fiveDay-icon" src=${iconUrl} alt=${weather[0].description
-					} />
-            <h5 class="fiveDay-desc card-subtitle mb-2">${weather[0].description
-					}</h5>
-            <p class="fiveDay-info card-text">Temp: ${Math.floor(
-						celcius,
-					)} &#8451</p>
+            <img class="fiveDay-icon" src=${iconUrl} alt=${weather[0].description} />
+            <h5 class="fiveDay-desc card-subtitle mb-2">${weather[0].description}</h5>
+            <p class="fiveDay-info card-text">Temp: ${Math.floor(celcius)} &#8451</p>
             <p class="fiveDay-info card-text">Wind: ${wind.speed} KPH</p>
             <p class="fiveDay-info card-text">Humidity: ${main.humidity}%</p>
           </div>
-					</div>
+				</div>
         `);
 			}
 		});
@@ -115,7 +107,6 @@ const searchCity = (searchTerm) => {
 
 const loadDefaultCity = () => {
 	const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
-
 	const lastSearchTerm = history[0];
 
 	if (lastSearchTerm) {
@@ -123,6 +114,7 @@ const loadDefaultCity = () => {
 	} else {
 		searchCity('London');
 	}
+
 };
 
 const renderHistory = () => {
@@ -132,19 +124,24 @@ const renderHistory = () => {
 
 	history.forEach((term) => {
 		const button = $('<button>')
-			.text(term)
-			.addClass('btn btn-secondary mr-2 mb-3 flex-grow-1');
+			.addClass('btn btn-secondary mr-2 mb-3 flex-grow-1')
+			.text(term);
+
 		button.on('click', () => searchCity(term));
+
 		historyEl.append(button);
 	});
+
 };
 
-const reverseDate = (date) => date.split(' ').reverse().join('/');
+const reverseDate = (date) =>
+	date.split(' ').reverse().join('/');
 
 formEl.on('submit', (e) => {
 	e.preventDefault();
 
 	searchCity(inputEl.val());
+
 });
 
 loadDefaultCity();
